@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/care-requests")
+@RequestMapping("api/care-requests")
 public class CareRequestQueryController {
 
     private final CareRequestQueryService service;

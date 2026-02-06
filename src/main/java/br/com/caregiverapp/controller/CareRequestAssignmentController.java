@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/care-requests")
+@RequestMapping("api/care-requests")
 public class CareRequestAssignmentController {
 
     private final CareRequestAssignmentService service;

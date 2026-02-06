@@ -30,16 +30,16 @@ public class SecurityConfig {
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("api/auth/**").permitAll()
 
                         // Profiles
-                        .requestMatchers("/caregiver/**").hasRole("CAREGIVER")
-                        .requestMatchers("/elder/**").hasRole("ELDER")
+                        .requestMatchers("api/caregiver/**").hasRole("CAREGIVER")
+                        .requestMatchers("api/elder/**").hasRole("ELDER")
 
                         // Care Requests
-                        .requestMatchers(HttpMethod.POST, "/care-requests").hasRole("ELDER")
-                        .requestMatchers(HttpMethod.POST, "/care-requests/*/apply").hasRole("CAREGIVER")
-                        .requestMatchers(HttpMethod.GET, "/care-requests/*/applicants").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "api/care-requests").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "api/care-requests/*/apply").hasRole("CAREGIVER")
+                        .requestMatchers(HttpMethod.GET, "api/care-requests/*/applicants").hasRole("ELDER")
 
                         .anyRequest().authenticated()
                 )

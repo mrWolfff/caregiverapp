@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/caregiver/profile")
+@RequestMapping("api/caregiver/profile")
 public class CaregiverProfileController {
 
     private final CaregiverProfileService service;
