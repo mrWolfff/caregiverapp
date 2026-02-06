@@ -39,7 +39,7 @@ export default function CareRequests() {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    return new Date(dateStr).toLocaleDateString('pt-BR', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -48,10 +48,7 @@ export default function CareRequests() {
 
   const formatTime = (time: string) => {
     const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minutes} ${ampm}`;
+    return `${hours}:${minutes}`;
   };
 
   return (
@@ -60,10 +57,10 @@ export default function CareRequests() {
         <div className="max-w-4xl mx-auto animate-fade-in">
           <div className="mb-8">
             <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-              Find Care Opportunities
+              Encontrar Oportunidades de Cuidado
             </h1>
             <p className="text-muted-foreground">
-              Browse open care requests in your area
+              Navegue pelos pedidos de cuidado abertos na sua área
             </p>
           </div>
 
@@ -72,19 +69,19 @@ export default function CareRequests() {
             <CardContent className="pt-6">
               <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1 space-y-2">
-                  <Label htmlFor="city">City</Label>
+                  <Label htmlFor="city">Cidade</Label>
                   <Input
                     id="city"
-                    placeholder="Filter by city..."
+                    placeholder="Filtrar por cidade..."
                     value={filters.city}
                     onChange={(e) => setFilters((prev) => ({ ...prev, city: e.target.value }))}
                   />
                 </div>
                 <div className="flex-1 space-y-2">
-                  <Label htmlFor="state">State</Label>
+                  <Label htmlFor="state">Estado</Label>
                   <Input
                     id="state"
-                    placeholder="Filter by state..."
+                    placeholder="Filtrar por estado..."
                     value={filters.state}
                     onChange={(e) => setFilters((prev) => ({ ...prev, state: e.target.value }))}
                   />
@@ -92,7 +89,7 @@ export default function CareRequests() {
                 <div className="flex items-end">
                   <Button type="submit" className="w-full sm:w-auto">
                     <Search className="h-4 w-4 mr-2" />
-                    Search
+                    Buscar
                   </Button>
                 </div>
               </form>
@@ -108,7 +105,7 @@ export default function CareRequests() {
             <Card className="text-center py-12">
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  No care requests found. Try adjusting your filters.
+                  Nenhum pedido de cuidado encontrado. Tente ajustar seus filtros.
                 </p>
                 <Button
                   variant="outline"
@@ -117,7 +114,7 @@ export default function CareRequests() {
                     loadRequests();
                   }}
                 >
-                  Clear Filters
+                  Limpar Filtros
                 </Button>
               </CardContent>
             </Card>
@@ -135,11 +132,11 @@ export default function CareRequests() {
                           <Badge
                             variant={request.status === 'OPEN' ? 'default' : 'secondary'}
                           >
-                            {request.status}
+                            {request.status === 'OPEN' ? 'ABERTO' : request.status}
                           </Badge>
                           {request.elderName && (
                             <span className="text-sm text-muted-foreground">
-                              by {request.elderName}
+                              por {request.elderName}
                             </span>
                           )}
                         </div>
@@ -172,7 +169,7 @@ export default function CareRequests() {
                     </div>
                     <div className="mt-4">
                       <Button asChild>
-                        <Link to={`/care-requests/${request.id}`}>View Details</Link>
+                        <Link to={`/care-requests/${request.id}`}>Ver Detalhes</Link>
                       </Button>
                     </div>
                   </CardContent>

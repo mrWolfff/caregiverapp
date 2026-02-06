@@ -10,21 +10,21 @@ export default function Dashboard() {
 
   const elderActions = [
     {
-      title: 'Create Care Request',
-      description: 'Post a new care request for caregivers to find',
+      title: 'Criar Pedido de Cuidado',
+      description: 'Publique um novo pedido para cuidadores encontrarem',
       icon: PlusCircle,
       href: '/care-requests/new',
       primary: true,
     },
     {
-      title: 'My Requests',
-      description: 'View and manage your care requests',
+      title: 'Meus Pedidos',
+      description: 'Visualize e gerencie seus pedidos de cuidado',
       icon: ClipboardList,
       href: '/my-requests',
     },
     {
-      title: 'My Profile',
-      description: 'Update your profile information',
+      title: 'Meu Perfil',
+      description: 'Atualize suas informações de perfil',
       icon: User,
       href: '/elder/profile',
     },
@@ -32,21 +32,21 @@ export default function Dashboard() {
 
   const caregiverActions = [
     {
-      title: 'Find Care Jobs',
-      description: 'Browse available care requests in your area',
+      title: 'Buscar Vagas',
+      description: 'Veja os pedidos de cuidado disponíveis na sua área',
       icon: Search,
       href: '/care-requests',
       primary: true,
     },
     {
-      title: 'My Applications',
-      description: 'Track your care request applications',
+      title: 'Minhas Candidaturas',
+      description: 'Acompanhe suas candidaturas a pedidos de cuidado',
       icon: Briefcase,
       href: '/care-requests',
     },
     {
-      title: 'My Profile',
-      description: 'Update your caregiver profile',
+      title: 'Meu Perfil',
+      description: 'Atualize seu perfil de cuidador',
       icon: User,
       href: '/caregiver/profile',
     },
@@ -61,12 +61,12 @@ export default function Dashboard() {
           {/* Welcome Section */}
           <div className="mb-10">
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-2">
-              Welcome back, {user?.firstName}! 👋
+              Bem-vindo de volta, {user?.firstName}! 👋
             </h1>
             <p className="text-lg text-muted-foreground">
               {user?.role === 'ELDER'
-                ? 'Manage your care requests and connect with caregivers.'
-                : 'Find care opportunities and grow your caregiving career.'}
+                ? 'Gerencie seus pedidos de cuidado e conecte-se com cuidadores.'
+                : 'Encontre oportunidades de cuidado e cresça sua carreira.'}
             </p>
           </div>
 
@@ -99,7 +99,7 @@ export default function Dashboard() {
                     asChild
                   >
                     <Link to={action.href}>
-                      {action.primary ? 'Get Started' : 'View'}
+                      {action.primary ? 'Começar' : 'Visualizar'}
                     </Link>
                   </Button>
                 </CardContent>
@@ -112,14 +112,14 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <FileText className="h-5 w-5 text-secondary-foreground" />
-                Quick Tip
+                Dica Rápida
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-secondary-foreground">
                 {user?.role === 'ELDER'
-                  ? 'Complete your profile to help caregivers understand your needs better. A detailed profile attracts more qualified caregivers!'
-                  : 'Keep your profile updated with your latest skills and availability. Elders are more likely to choose caregivers with complete profiles.'}
+                  ? 'Complete seu perfil para ajudar os cuidadores a entenderem melhor suas necessidades. Um perfil detalhado atrai cuidadores mais qualificados!'
+                  : 'Mantenha seu perfil atualizado com suas últimas habilidades e disponibilidade. Os idosos têm mais probabilidade de escolher cuidadores com perfis completos.'}
               </p>
             </CardContent>
           </Card>

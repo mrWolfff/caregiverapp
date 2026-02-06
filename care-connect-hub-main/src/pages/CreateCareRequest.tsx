@@ -12,12 +12,12 @@ import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
 const careRequestSchema = z.object({
-  description: z.string().min(20, 'Please provide a detailed description (at least 20 characters)'),
-  date: z.string().min(1, 'Date is required'),
-  startTime: z.string().min(1, 'Start time is required'),
-  endTime: z.string().min(1, 'End time is required'),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().min(1, 'State is required'),
+  description: z.string().min(20, 'Por favor, forneça uma descrição detalhada (pelo menos 20 caracteres)'),
+  date: z.string().min(1, 'A data é obrigatória'),
+  startTime: z.string().min(1, 'A hora de início é obrigatória'),
+  endTime: z.string().min(1, 'A hora de término é obrigatória'),
+  city: z.string().min(1, 'A cidade é obrigatória'),
+  state: z.string().min(1, 'O estado é obrigatório'),
 });
 
 export default function CreateCareRequest() {
@@ -61,14 +61,14 @@ export default function CreateCareRequest() {
     try {
       const newRequest = await apiService.createCareRequest(formData);
       toast({
-        title: 'Care request created',
-        description: 'Your care request has been posted successfully.',
+        title: 'Pedido de cuidado criado',
+        description: 'Seu pedido de cuidado foi publicado com sucesso.',
       });
       navigate(`/care-requests/${newRequest.id}`);
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to create care request. Please try again.',
+        title: 'Erro',
+        description: 'Falha ao criar o pedido de cuidado. Por favor, tente novamente.',
         variant: 'destructive',
       });
     } finally {
@@ -87,10 +87,10 @@ export default function CreateCareRequest() {
         <div className="max-w-2xl mx-auto animate-fade-in">
           <div className="mb-8">
             <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-              Create Care Request
+              Criar Pedido de Cuidado
             </h1>
             <p className="text-muted-foreground">
-              Describe what kind of care you need and when.
+              Descreva que tipo de cuidado você precisa e quando.
             </p>
           </div>
 
@@ -100,18 +100,18 @@ export default function CreateCareRequest() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
-                  Care Details
+                  Detalhes do Cuidado
                 </CardTitle>
                 <CardDescription>
-                  Describe the type of care needed
+                  Descreva o tipo de cuidado necessário
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">Descrição</Label>
                   <Textarea
                     id="description"
-                    placeholder="Please describe the care you need. Include any specific requirements, health conditions to be aware of, or special instructions..."
+                    placeholder="Por favor, descreva o cuidado que você precisa. Inclua quaisquer requisitos específicos, condições de saúde a serem observadas ou instruções especiais..."
                     value={formData.description}
                     onChange={(e) => updateField('description', e.target.value)}
                     rows={5}
@@ -129,13 +129,13 @@ export default function CreateCareRequest() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-primary" />
-                  Schedule
+                  Agendamento
                 </CardTitle>
-                <CardDescription>When do you need care?</CardDescription>
+                <CardDescription>Quando você precisa de cuidado?</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
+                  <Label htmlFor="date">Data</Label>
                   <Input
                     id="date"
                     type="date"
@@ -153,7 +153,7 @@ export default function CreateCareRequest() {
                   <div className="space-y-2">
                     <Label htmlFor="startTime" className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      Start Time
+                      Hora de Início
                     </Label>
                     <Input
                       id="startTime"
@@ -169,7 +169,7 @@ export default function CreateCareRequest() {
                   <div className="space-y-2">
                     <Label htmlFor="endTime" className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      End Time
+                      Hora de Término
                     </Label>
                     <Input
                       id="endTime"
@@ -191,17 +191,17 @@ export default function CreateCareRequest() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  Location
+                  Localização
                 </CardTitle>
-                <CardDescription>Where is care needed?</CardDescription>
+                <CardDescription>Onde o cuidado é necessário?</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="city">City</Label>
+                    <Label htmlFor="city">Cidade</Label>
                     <Input
                       id="city"
-                      placeholder="New York"
+                      placeholder="São Paulo"
                       value={formData.city}
                       onChange={(e) => updateField('city', e.target.value)}
                       className={errors.city ? 'border-destructive' : ''}
@@ -211,10 +211,10 @@ export default function CreateCareRequest() {
                     )}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="state">State</Label>
+                    <Label htmlFor="state">Estado</Label>
                     <Input
                       id="state"
-                      placeholder="NY"
+                      placeholder="SP"
                       value={formData.state}
                       onChange={(e) => updateField('state', e.target.value)}
                       className={errors.state ? 'border-destructive' : ''}
@@ -231,10 +231,10 @@ export default function CreateCareRequest() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Creating...
+                  Criando...
                 </>
               ) : (
-                'Post Care Request'
+                'Publicar Pedido de Cuidado'
               )}
             </Button>
           </form>

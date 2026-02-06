@@ -27,7 +27,7 @@ export default function MyRequests() {
   }, []);
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    return new Date(dateStr).toLocaleDateString('pt-BR', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -36,10 +36,7 @@ export default function MyRequests() {
 
   const formatTime = (time: string) => {
     const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minutes} ${ampm}`;
+    return `${hours}:${minutes}`;
   };
 
   const getStatusColor = (status: string) => {
@@ -62,16 +59,16 @@ export default function MyRequests() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-                My Care Requests
+                Meus Pedidos de Cuidado
               </h1>
               <p className="text-muted-foreground">
-                Manage your posted care requests
+                Gerencie seus pedidos de cuidado publicados
               </p>
             </div>
             <Button asChild>
               <Link to="/care-requests/new">
                 <PlusCircle className="h-4 w-4 mr-2" />
-                New Request
+                Novo Pedido
               </Link>
             </Button>
           </div>
@@ -84,14 +81,14 @@ export default function MyRequests() {
             <Card className="text-center py-12">
               <CardContent>
                 <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No care requests yet</h3>
+                <h3 className="text-lg font-semibold mb-2">Nenhum pedido ainda</h3>
                 <p className="text-muted-foreground mb-4">
-                  Create your first care request to find a caregiver.
+                  Crie seu primeiro pedido de cuidado para encontrar um cuidador.
                 </p>
                 <Button asChild>
                   <Link to="/care-requests/new">
                     <PlusCircle className="h-4 w-4 mr-2" />
-                    Create Care Request
+                    Criar Pedido de Cuidado
                   </Link>
                 </Button>
               </CardContent>
@@ -108,7 +105,9 @@ export default function MyRequests() {
                       <div className="space-y-1 flex-1">
                         <div className="flex items-center gap-2">
                           <Badge variant={getStatusColor(request.status)}>
-                            {request.status}
+                            {request.status === 'OPEN' ? 'ABERTO' : 
+                             request.status === 'ASSIGNED' ? 'ATRIBUÍDO' : 
+                             request.status === 'COMPLETED' ? 'CONCLUÍDO' : request.status}
                           </Badge>
                         </div>
                         <CardTitle className="text-lg line-clamp-2">
@@ -141,7 +140,7 @@ export default function MyRequests() {
                     <div className="mt-4">
                       <Button variant="outline" asChild>
                         <Link to={`/care-requests/${request.id}`}>
-                          View Details & Applications
+                          Ver Detalhes e Candidaturas
                         </Link>
                       </Button>
                     </div>

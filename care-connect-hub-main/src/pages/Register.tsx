@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { UserRole } from '@/types';
 import { Heart, Loader2, Mail, Lock, User, Users } from 'lucide-react';
 import { z } from 'zod';
+import {APP_CONFIG} from "@/lib/utils.ts";
 
 const registerSchema = z.object({
   firstName: z.string().min(1, 'Nome é obrigatório').max(50),
@@ -74,11 +75,11 @@ export default function Register() {
             <Link to="/" className="inline-flex items-center gap-2 mb-8">
               <div className="p-2 rounded-lg gradient-primary">
                 <Heart className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-heading font-bold text-xl">CuidadorConnect</span>
+              </div>/home/wolf/Downloads/firefox-147.0.2/firefox/Link to firefox
+              <span className="font-heading font-bold text-xl">{APP_CONFIG.appName}</span>
             </Link>
-            <h1 className="text-3xl font-heading font-bold text-foreground">Create your account</h1>
-            <p className="mt-2 text-muted-foreground">Join our caring community today</p>
+            <h1 className="text-3xl font-heading font-bold text-foreground">Crie sua conta</h1>
+            <p className="mt-2 text-muted-foreground">Junte-se à nossa comunidade de cuidado hoje</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -90,7 +91,7 @@ export default function Register() {
 
             {/* Role Selection */}
             <div className="space-y-3">
-              <Label>I am a...</Label>
+              <Label>Eu sou um...</Label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -103,7 +104,7 @@ export default function Register() {
                 >
                   <User className={`h-6 w-6 mx-auto mb-2 ${formData.role === 'ELDER' ? 'text-primary' : 'text-muted-foreground'}`} />
                   <span className={`text-sm font-medium ${formData.role === 'ELDER' ? 'text-primary' : 'text-foreground'}`}>
-                    Looking for Care
+                    Procuro Cuidados
                   </span>
                 </button>
                 <button
@@ -117,7 +118,7 @@ export default function Register() {
                 >
                   <Users className={`h-6 w-6 mx-auto mb-2 ${formData.role === 'CAREGIVER' ? 'text-primary' : 'text-muted-foreground'}`} />
                   <span className={`text-sm font-medium ${formData.role === 'CAREGIVER' ? 'text-primary' : 'text-foreground'}`}>
-                    Caregiver
+                    Sou Cuidador
                   </span>
                 </button>
               </div>
@@ -125,20 +126,20 @@ export default function Register() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
+                <Label htmlFor="firstName">Nome</Label>
                 <Input
                   id="firstName"
-                  placeholder="John"
+                  placeholder="João"
                   value={formData.firstName}
                   onChange={(e) => updateField('firstName', e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
+                <Label htmlFor="lastName">Sobrenome</Label>
                 <Input
                   id="lastName"
-                  placeholder="Doe"
+                  placeholder="Silva"
                   value={formData.lastName}
                   onChange={(e) => updateField('lastName', e.target.value)}
                   required
@@ -147,13 +148,13 @@ export default function Register() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-mail</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="voce@exemplo.com"
                   value={formData.email}
                   onChange={(e) => updateField('email', e.target.value)}
                   className="pl-10"
@@ -163,7 +164,7 @@ export default function Register() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -176,25 +177,25 @@ export default function Register() {
                   required
                 />
               </div>
-              <p className="text-xs text-muted-foreground">Must be at least 6 characters</p>
+              <p className="text-xs text-muted-foreground">Deve ter pelo menos 6 caracteres</p>
             </div>
 
             <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Creating account...
+                  Criando conta...
                 </>
               ) : (
-                'Create Account'
+                'Criar Conta'
               )}
             </Button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
+            Já tem uma conta?{' '}
             <Link to="/login" className="text-primary font-medium hover:underline">
-              Sign in
+              Entrar
             </Link>
           </p>
         </div>

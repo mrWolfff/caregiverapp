@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Heart, User, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import {APP_CONFIG} from "@/lib/utils.ts";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,13 +30,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navLinks = isAuthenticated
     ? user?.role === 'ELDER'
       ? [
-          { href: '/dashboard', label: 'Dashboard' },
-          { href: '/my-requests', label: 'My Requests' },
-          { href: '/care-requests/new', label: 'Create Request' },
+          { href: '/dashboard', label: 'Painel' },
+          { href: '/my-requests', label: 'Meus Pedidos' },
+          { href: '/care-requests/new', label: 'Criar Pedido' },
         ]
       : [
-          { href: '/dashboard', label: 'Dashboard' },
-          { href: '/care-requests', label: 'Find Care Jobs' },
+          { href: '/dashboard', label: 'Painel' },
+          { href: '/care-requests', label: 'Buscar Vagas' },
         ]
     : [];
 
@@ -50,7 +51,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="p-2 rounded-lg gradient-primary">
                 <Heart className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="font-heading font-bold text-xl text-foreground">CareConnect</span>
+              <span className="font-heading font-bold text-xl text-foreground">{APP_CONFIG.appName}</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -83,23 +84,23 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <DropdownMenuItem asChild>
                       <Link to={user?.role === 'ELDER' ? '/elder/profile' : '/caregiver/profile'}>
                         <User className="mr-2 h-4 w-4" />
-                        My Profile
+                        Meu Perfil
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
-                      Logout
+                      Sair
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
                 <div className="hidden md:flex items-center gap-2">
                   <Button variant="ghost" size="sm" asChild>
-                    <Link to="/login">Sign In</Link>
+                    <Link to="/login">Entrar</Link>
                   </Button>
                   <Button size="sm" asChild>
-                    <Link to="/register">Get Started</Link>
+                    <Link to="/register">Começar Agora</Link>
                   </Button>
                 </div>
               )}
@@ -141,7 +142,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       onClick={() => setMobileMenuOpen(false)}
                       className="px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted"
                     >
-                      My Profile
+                      Meu Perfil
                     </Link>
                     <button
                       onClick={() => {
@@ -150,7 +151,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       }}
                       className="px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 text-left"
                     >
-                      Logout
+                      Sair
                     </button>
                   </>
                 ) : (
@@ -160,14 +161,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       onClick={() => setMobileMenuOpen(false)}
                       className="px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted"
                     >
-                      Sign In
+                      Entrar
                     </Link>
                     <Link
                       to="/register"
                       onClick={() => setMobileMenuOpen(false)}
                       className="px-3 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground"
                     >
-                      Get Started
+                      Começar Agora
                     </Link>
                   </>
                 )}

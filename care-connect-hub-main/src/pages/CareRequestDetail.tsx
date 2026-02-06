@@ -64,8 +64,8 @@ export default function CareRequestDetail() {
         }
       } catch (error) {
         toast({
-          title: 'Error',
-          description: 'Failed to load care request.',
+          title: 'Erro',
+          description: 'Falha ao carregar o pedido de cuidado.',
           variant: 'destructive',
         });
         navigate('/care-requests');
@@ -84,15 +84,15 @@ export default function CareRequestDetail() {
     try {
       await apiService.applyToCareRequest(id, applicationMessage);
       toast({
-        title: 'Application sent!',
-        description: 'The elder will review your application.',
+        title: 'Candidatura enviada!',
+        description: 'O idoso revisará sua candidatura.',
       });
       setDialogOpen(false);
       setApplicationMessage('');
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to apply. You may have already applied.',
+        title: 'Erro',
+        description: 'Falha ao se candidatar. Você já pode ter se candidatado.',
         variant: 'destructive',
       });
     } finally {
@@ -107,8 +107,8 @@ export default function CareRequestDetail() {
     try {
       await apiService.acceptApplication(id, applicationId);
       toast({
-        title: 'Caregiver accepted!',
-        description: 'The caregiver has been notified.',
+        title: 'Cuidador aceito!',
+        description: 'O cuidador foi notificado.',
       });
       // Reload the request to see updated status
       const requestData = await apiService.getCareRequest(id);
@@ -117,8 +117,8 @@ export default function CareRequestDetail() {
       setApplications(apps);
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to accept caregiver.',
+        title: 'Erro',
+        description: 'Falha ao aceitar o cuidador.',
         variant: 'destructive',
       });
     } finally {
@@ -127,7 +127,7 @@ export default function CareRequestDetail() {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    return new Date(dateStr).toLocaleDateString('pt-BR', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -137,10 +137,7 @@ export default function CareRequestDetail() {
 
   const formatTime = (time: string) => {
     const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minutes} ${ampm}`;
+    return `${hours}:${minutes}`;
   };
 
   if (isLoading) {
@@ -170,7 +167,7 @@ export default function CareRequestDetail() {
             onClick={() => navigate(-1)}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
+            Voltar
           </Button>
 
           {/* Main Request Card */}
@@ -188,14 +185,16 @@ export default function CareRequestDetail() {
                           : 'outline'
                       }
                     >
-                      {request.status}
+                      {request.status === 'OPEN' ? 'ABERTO' : 
+                       request.status === 'ASSIGNED' ? 'ATRIBUÍDO' : 
+                       request.status === 'COMPLETED' ? 'CONCLUÍDO' : request.status}
                     </Badge>
                   </div>
-                  <CardTitle className="text-2xl">Care Request Details</CardTitle>
+                  <CardTitle className="text-2xl">Detalhes do Pedido de Cuidado</CardTitle>
                   {request.elderName && (
                     <CardDescription className="flex items-center gap-1 mt-1">
                       <User className="h-4 w-4" />
-                      Posted by {request.elderName}
+                      Publicado por {request.elderName}
                     </CardDescription>
                   )}
                 </div>
@@ -207,14 +206,14 @@ export default function CareRequestDetail() {
                 <div className="p-4 rounded-lg bg-muted/50">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                     <Calendar className="h-4 w-4" />
-                    Date
+                    Data
                   </div>
                   <p className="font-medium">{formatDate(request.date)}</p>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                     <Clock className="h-4 w-4" />
-                    Time
+                    Horário
                   </div>
                   <p className="font-medium">
                     {formatTime(request.startTime)} - {formatTime(request.endTime)}
@@ -225,7 +224,7 @@ export default function CareRequestDetail() {
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                   <MapPin className="h-4 w-4" />
-                  Location
+                  Localização
                 </div>
                 <p className="font-medium">
                   {request.city}, {request.state}
@@ -234,7 +233,7 @@ export default function CareRequestDetail() {
 
               {/* Description */}
               <div>
-                <h3 className="font-semibold mb-2">Description</h3>
+                <h3 className="font-semibold mb-2">Descrição</h3>
                 <p className="text-muted-foreground whitespace-pre-wrap">
                   {request.description}
                 </p>
@@ -246,22 +245,22 @@ export default function CareRequestDetail() {
                   <DialogTrigger asChild>
                     <Button size="lg" className="w-full">
                       <Send className="h-4 w-4 mr-2" />
-                      Apply for this Care Request
+                      Candidatar-se a este Pedido
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Apply for Care Request</DialogTitle>
+                      <DialogTitle>Candidatar-se ao Pedido</DialogTitle>
                       <DialogDescription>
-                        Introduce yourself to the elder
+                        Apresente-se ao idoso
                       </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                       <div className="space-y-2">
-                        <Label htmlFor="message">Message (optional)</Label>
+                        <Label htmlFor="message">Mensagem (opcional)</Label>
                         <Textarea
                           id="message"
-                          placeholder="Tell the elder why you're a great fit for this care request..."
+                          placeholder="Diga ao idoso por que você é a pessoa certa para este pedido..."
                           value={applicationMessage}
                           onChange={(e) => setApplicationMessage(e.target.value)}
                           rows={4}
@@ -270,18 +269,18 @@ export default function CareRequestDetail() {
                     </div>
                     <DialogFooter>
                       <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                        Cancel
+                        Cancelar
                       </Button>
                       <Button onClick={handleApply} disabled={isApplying}>
                         {isApplying ? (
                           <>
                             <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                            Sending...
+                            Enviando...
                           </>
                         ) : (
                           <>
                             <Send className="h-4 w-4 mr-2" />
-                            Send Application
+                            Enviar Candidatura
                           </>
                         )}
                       </Button>
@@ -296,13 +295,13 @@ export default function CareRequestDetail() {
           {isElderOwner && (
             <div className="space-y-4">
               <h2 className="text-xl font-heading font-bold">
-                Applications ({applications.length})
+                Candidaturas ({applications.length})
               </h2>
 
               {applications.length === 0 ? (
                 <Card>
                   <CardContent className="py-8 text-center text-muted-foreground">
-                    No applications yet. Caregivers will appear here when they apply.
+                    Nenhuma candidatura ainda. Os cuidadores aparecerão aqui quando se candidatarem.
                   </CardContent>
                 </Card>
               ) : (
@@ -317,7 +316,7 @@ export default function CareRequestDetail() {
                             {app.status === 'ACCEPTED' && (
                               <Badge variant="default" className="bg-success">
                                 <CheckCircle className="h-3 w-3 mr-1" />
-                                Accepted
+                                Aceito
                               </Badge>
                             )}
                           </CardTitle>
@@ -326,13 +325,13 @@ export default function CareRequestDetail() {
                               {app.yearsOfExperience && (
                                 <span className="flex items-center gap-1">
                                   <Briefcase className="h-4 w-4" />
-                                  {app.yearsOfExperience} years exp.
+                                  {app.yearsOfExperience} anos de exp.
                                 </span>
                               )}
                               {app.hourlyRate && (
                                 <span className="flex items-center gap-1">
                                   <DollarSign className="h-4 w-4" />
-                                  ${app.hourlyRate}/hr
+                                  R${app.hourlyRate}/h
                                 </span>
                               )}
                             </CardDescription>
@@ -360,12 +359,12 @@ export default function CareRequestDetail() {
                           {acceptingId === app.id ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                              Accepting...
+                              Aceitando...
                             </>
                           ) : (
                             <>
                               <CheckCircle className="h-4 w-4 mr-2" />
-                              Accept Caregiver
+                              Aceitar Cuidador
                             </>
                           )}
                         </Button>

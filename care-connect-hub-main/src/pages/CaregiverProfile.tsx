@@ -13,16 +13,16 @@ import { Loader2, Save, User, Briefcase, MapPin, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const SKILL_OPTIONS = [
-  'Personal Care',
-  'Meal Preparation',
-  'Medication Management',
-  'Mobility Assistance',
-  'Companionship',
-  'Light Housekeeping',
-  'Transportation',
-  'Dementia Care',
-  'Physical Therapy Support',
-  'First Aid/CPR',
+  'Cuidado Pessoal',
+  'Preparo de Refeições',
+  'Administração de Medicamentos',
+  'Auxílio na Mobilidade',
+  'Companhia',
+  'Limpeza Leve',
+  'Transporte',
+  'Cuidado para Demência',
+  'Suporte em Fisioterapia',
+  'Primeiros Socorros/RCP',
 ];
 
 export default function CaregiverProfile() {
@@ -69,13 +69,13 @@ export default function CaregiverProfile() {
         await apiService.createCaregiverProfile(profile);
       }
       toast({
-        title: 'Profile saved',
-        description: 'Your profile has been updated successfully.',
+        title: 'Perfil salvo',
+        description: 'Seu perfil foi atualizado com sucesso.',
       });
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to save profile. Please try again.',
+        title: 'Erro',
+        description: 'Falha ao salvar o perfil. Por favor, tente novamente.',
         variant: 'destructive',
       });
     } finally {
@@ -111,9 +111,9 @@ export default function CaregiverProfile() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto animate-fade-in">
           <div className="mb-8">
-            <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Caregiver Profile</h1>
+            <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Perfil do Cuidador</h1>
             <p className="text-muted-foreground">
-              A complete profile helps elders find and trust you.
+              Um perfil completo ajuda os idosos a encontrarem e confiarem em você.
             </p>
           </div>
 
@@ -123,13 +123,13 @@ export default function CaregiverProfile() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
-                  Personal Information
+                  Informações Pessoais
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
+                    <Label htmlFor="firstName">Nome</Label>
                     <Input
                       id="firstName"
                       value={profile.firstName}
@@ -138,7 +138,7 @@ export default function CaregiverProfile() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
+                    <Label htmlFor="lastName">Sobrenome</Label>
                     <Input
                       id="lastName"
                       value={profile.lastName}
@@ -149,21 +149,21 @@ export default function CaregiverProfile() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">Número de Telefone</Label>
                   <Input
                     id="phone"
                     type="tel"
-                    placeholder="(555) 123-4567"
+                    placeholder="(11) 99999-9999"
                     value={profile.phone}
                     onChange={(e) => updateField('phone', e.target.value)}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Bio</Label>
+                  <Label htmlFor="bio">Biografia</Label>
                   <Textarea
                     id="bio"
-                    placeholder="Tell elders about yourself, your experience, and why you love caregiving..."
+                    placeholder="Conte aos idosos sobre você, sua experiência e por que você ama cuidar de pessoas..."
                     value={profile.bio}
                     onChange={(e) => updateField('bio', e.target.value)}
                     rows={4}
@@ -178,13 +178,13 @@ export default function CaregiverProfile() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-primary" />
-                  Experience & Rates
+                  Experiência e Valores
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="yearsOfExperience">Years of Experience</Label>
+                    <Label htmlFor="yearsOfExperience">Anos de Experiência</Label>
                     <Input
                       id="yearsOfExperience"
                       type="number"
@@ -195,7 +195,7 @@ export default function CaregiverProfile() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+                    <Label htmlFor="hourlyRate">Valor por Hora (R$)</Label>
                     <Input
                       id="hourlyRate"
                       type="number"
@@ -210,7 +210,7 @@ export default function CaregiverProfile() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="availableFrom">Available From</Label>
+                    <Label htmlFor="availableFrom">Disponível de</Label>
                     <Input
                       id="availableFrom"
                       type="time"
@@ -220,7 +220,7 @@ export default function CaregiverProfile() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="availableTo">Available To</Label>
+                    <Label htmlFor="availableTo">Disponível até</Label>
                     <Input
                       id="availableTo"
                       type="time"
@@ -238,27 +238,27 @@ export default function CaregiverProfile() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  Location
+                  Localização
                 </CardTitle>
-                <CardDescription>Where you're available to work</CardDescription>
+                <CardDescription>Onde você está disponível para trabalhar</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="city">City</Label>
+                    <Label htmlFor="city">Cidade</Label>
                     <Input
                       id="city"
-                      placeholder="New York"
+                      placeholder="São Paulo"
                       value={profile.city}
                       onChange={(e) => updateField('city', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="state">State</Label>
+                    <Label htmlFor="state">Estado</Label>
                     <Input
                       id="state"
-                      placeholder="NY"
+                      placeholder="SP"
                       value={profile.state}
                       onChange={(e) => updateField('state', e.target.value)}
                       required
@@ -271,8 +271,8 @@ export default function CaregiverProfile() {
             {/* Skills */}
             <Card>
               <CardHeader>
-                <CardTitle>Skills</CardTitle>
-                <CardDescription>Select the services you can provide</CardDescription>
+                <CardTitle>Habilidades</CardTitle>
+                <CardDescription>Selecione os serviços que você pode oferecer</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -300,12 +300,12 @@ export default function CaregiverProfile() {
               {isSaving ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
+                  Salvando...
                 </>
               ) : (
                 <>
                   <Save className="h-4 w-4" />
-                  Save Profile
+                  Salvar Perfil
                 </>
               )}
             </Button>

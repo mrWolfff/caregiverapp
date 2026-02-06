@@ -1,0 +1,8 @@
+ALTER TABLE care_requests
+ALTER COLUMN state TYPE VARCHAR(2);
+
+ALTER TABLE caregiver_profiles
+ALTER COLUMN state TYPE VARCHAR(2);
+
+ALTER TABLE elder_profiles
+ALTER COLUMN state TYPE VARCHAR(2);
