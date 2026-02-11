@@ -18,19 +18,26 @@ class ApiService {
     return headers;
   }
 
-  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  private async request<T>(
+      endpoint: string,
+      options: RequestInit = {}
+  ): Promise<T> {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers: this.getHeaders(),
     });
 
+    const data = await response.json().catch(() => null);
+
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+      throw new Error(
+          data?.message || `HTTP error! status: ${response.status}`
+      );
     }
 
-    return response.json();
+    return data as T;
   }
+
 
   // Auth
   async login(email: string, password: string): Promise<AuthResponse> {

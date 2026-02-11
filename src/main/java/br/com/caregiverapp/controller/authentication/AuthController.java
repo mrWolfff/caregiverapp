@@ -19,10 +19,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(
+    public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        authService.register(
+        AuthResponse response = authService.register(
                 request.firstName(),
                 request.lastName(),
                 request.email(),
@@ -30,16 +30,16 @@ public class AuthController {
                 request.role()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
             @RequestBody AuthRequest request
     ) {
-        String token =
+        AuthResponse response =
                 authService.login(request.email(), request.password());
 
-        return ResponseEntity.ok(new AuthResponse(token));
+        return ResponseEntity.ok(response);
     }
 }

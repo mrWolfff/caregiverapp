@@ -1,5 +1,7 @@
 package br.com.caregiverapp.service;
 
+import br.com.caregiverapp.domain.dto.AuthResponse;
+import br.com.caregiverapp.domain.dto.UserResponse;
 import br.com.caregiverapp.domain.model.User;
 import br.com.caregiverapp.domain.model.UserRole;
 import br.com.caregiverapp.repository.UserRepository;
@@ -29,16 +31,31 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public String login(String email, String password) {
-        Authentication auth =
+    public AuthResponse login(String email, String password) {
+
+        Authentication authentication =
                 new UsernamePasswordAuthenticationToken(email, password);
 
-        authenticationManager.authenticate(auth);
+        authenticationManager.authenticate(authentication);
 
-        return jwtService.generateToken(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+
+        String token = jwtService.generateToken(email);
+
+        return new AuthResponse(
+                token,
+                new UserResponse(
+                        user.getId(),
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getRole()
+                )
+        );
     }
 
-    public void register(
+
+    public AuthResponse register(
             String firstName,
             String lastName,
             String email,
@@ -59,5 +76,16 @@ public class AuthService {
         );
 
         userRepository.save(user);
+        String token = jwtService.generateToken(email);
+
+        return new AuthResponse(
+                token,
+                new UserResponse(
+                        user.getId(),
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getRole()
+                )
+        );
     }
 }
