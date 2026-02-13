@@ -20,7 +20,7 @@ public class CareRequestController {
         this.service = service;
     }
 
-    @PostMapping("/elder/{elderProfileId}")
+    @PostMapping
     public ResponseEntity<CareRequestResponse> create(
             @RequestBody CreateCareRequestRequest request
     ) {

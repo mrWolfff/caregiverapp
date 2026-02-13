@@ -43,6 +43,18 @@ public class ElderProfile {
     @UpdateTimestamp
     private OffsetDateTime updatedAt;
 
+    @Column(nullable = false, length = 15)
+    private String phone;
+
+    @Column(name = "emergency_contact")
+    private String emergencyContact;
+
+    @Column(name = "emergency_phone")
+    private String emergencyPhone;
+
+    @Column(nullable = false)
+    private String address;
+
     protected ElderProfile() {}
 
     public ElderProfile(
@@ -72,4 +84,38 @@ public class ElderProfile {
     public String getMobilityLevel() { return mobilityLevel; }
     public String getCity() { return city; }
     public String getState() { return state; }
+    public String getPhone() { return phone; }
+    public String getEmergencyContact() { return emergencyContact; }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
+
+    public void setEmergencyPhone(String emergencyPhone) {
+        this.emergencyPhone = emergencyPhone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

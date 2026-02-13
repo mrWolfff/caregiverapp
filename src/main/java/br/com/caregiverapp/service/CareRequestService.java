@@ -2,6 +2,7 @@ package br.com.caregiverapp.service;
 
 import br.com.caregiverapp.domain.dto.CreateCareRequestRequest;
 import br.com.caregiverapp.domain.model.*;
+import br.com.caregiverapp.exception.ProfileNotFoundException;
 import br.com.caregiverapp.repository.CareRequestRepository;
 import br.com.caregiverapp.repository.ElderProfileRepository;
 import br.com.caregiverapp.security.AuthenticatedUserService;
@@ -32,8 +33,14 @@ public class CareRequestService {
 
         User user = authenticatedUserService.getCurrentUser();
 
-        ElderProfile elderProfile = elderProfileRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new IllegalStateException("Elder profile not found"));
+        ElderProfile elderProfile = elderProfileRepository
+                .findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new ProfileNotFoundException(
+                                "You must create an elder profile first"
+                        )
+                );
+
 
         CareRequest request = new CareRequest(
                 elderProfile,

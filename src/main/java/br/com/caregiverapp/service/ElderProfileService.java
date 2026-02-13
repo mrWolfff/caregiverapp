@@ -1,51 +1,87 @@
 package br.com.caregiverapp.service;
 
 import br.com.caregiverapp.domain.dto.CreateElderProfileRequest;
+import br.com.caregiverapp.domain.dto.UpdateElderProfileRequest;
 import br.com.caregiverapp.domain.model.ElderProfile;
 import br.com.caregiverapp.domain.model.User;
-import br.com.caregiverapp.domain.model.UserRole;
+import br.com.caregiverapp.exception.ProfileNotFoundException;
 import br.com.caregiverapp.repository.ElderProfileRepository;
 import br.com.caregiverapp.security.AuthenticatedUserService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ElderProfileService {
 
-    private final ElderProfileRepository profileRepository;
+    private final ElderProfileRepository repository;
     private final AuthenticatedUserService authenticatedUserService;
 
     public ElderProfileService(
-            ElderProfileRepository profileRepository,
+            ElderProfileRepository repository,
             AuthenticatedUserService authenticatedUserService
     ) {
-        this.profileRepository = profileRepository;
+        this.repository = repository;
         this.authenticatedUserService = authenticatedUserService;
     }
 
-    @Transactional
-    public ElderProfile createProfile(CreateElderProfileRequest req) {
+    public ElderProfile getProfile() {
+        User user = authenticatedUserService.getCurrentUser();
+
+        return repository.findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new ProfileNotFoundException("Elder profile not found")
+                );
+    }
+
+    public ElderProfile create(CreateElderProfileRequest request) {
 
         User user = authenticatedUserService.getCurrentUser();
 
-        if (user.getRole() != UserRole.ELDER) {
-            throw new IllegalStateException("Only elders can create profile");
-        }
-
-        if (profileRepository.existsByUserId(user.getId())) {
-            throw new IllegalStateException("Profile already exists");
-        }
-
         ElderProfile profile = new ElderProfile(
                 user,
-                req.bio(),
-                req.careNeeds(),
-                req.medicalConditions(),
-                req.mobilityLevel(),
-                req.city(),
-                req.state()
+                request.phone(),
+                request.emergencyContact(),
+                request.emergencyPhone(),
+                request.address(),
+                request.city(),
+                request.state()
         );
 
-        return profileRepository.save(profile);
+        return repository.save(profile);
+    }
+
+    public ElderProfile update(UpdateElderProfileRequest request) {
+
+        User user = authenticatedUserService.getCurrentUser();
+
+        ElderProfile profile = repository.findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new ProfileNotFoundException("Elder profile not found")
+                );
+
+        if (request.phone() != null) {
+            profile.setPhone(request.phone());
+        }
+
+        if (request.emergencyContact() != null) {
+            profile.setEmergencyContact(request.emergencyContact());
+        }
+
+        if (request.emergencyPhone() != null) {
+            profile.setEmergencyPhone(request.emergencyPhone());
+        }
+
+        if (request.address() != null) {
+            profile.setAddress(request.address());
+        }
+
+        if (request.city() != null) {
+            profile.setCity(request.city());
+        }
+
+        if (request.state() != null) {
+            profile.setState(request.state());
+        }
+
+        return repository.save(profile);
     }
 }

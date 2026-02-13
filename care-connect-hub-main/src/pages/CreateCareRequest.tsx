@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { apiService } from '@/services/api';
 import { Button } from '@/components/ui/button';
@@ -66,6 +66,14 @@ export default function CreateCareRequest() {
       });
       navigate(`/care-requests/${newRequest.id}`);
     } catch (error) {
+      if (error.status === 403) {
+        toast({
+          title: 'Erro',
+          description: error.message,
+          variant: 'destructive',
+        });
+        navigate('/elder/profile');
+      }
       toast({
         title: 'Erro',
         description: 'Falha ao criar o pedido de cuidado. Por favor, tente novamente.',
@@ -76,7 +84,6 @@ export default function CreateCareRequest() {
     }
   };
 
-  // Get tomorrow's date as minimum
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split('T')[0];

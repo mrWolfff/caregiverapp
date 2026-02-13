@@ -1,10 +1,12 @@
 package br.com.caregiverapp.domain.dto;
 
 public record CreateElderProfileRequest(
-        String bio,
-        String careNeeds,
-        String medicalConditions,
-        String mobilityLevel,
+        String firstName,
+        String lastName,
+        String phone,
+        String emergencyContact,
+        String emergencyPhone,
+        String address,
         String city,
         String state
 ) {}

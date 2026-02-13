@@ -9,9 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Save, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import {useNavigate} from "react-router-dom";
 
 export default function ElderProfile() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,6 +56,7 @@ export default function ElderProfile() {
         title: 'Perfil salvo',
         description: 'Seu perfil foi atualizado com sucesso.',
       });
+      navigate('/dashboard');
     } catch (error) {
       toast({
         title: 'Erro',
