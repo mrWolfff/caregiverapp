@@ -3,6 +3,7 @@ package br.com.caregiverapp.service;
 import br.com.caregiverapp.domain.dto.CreateCareRequestRequest;
 import br.com.caregiverapp.domain.model.*;
 import br.com.caregiverapp.exception.ProfileNotFoundException;
+import br.com.caregiverapp.exception.ResourceNotFoundException;
 import br.com.caregiverapp.repository.CareRequestRepository;
 import br.com.caregiverapp.repository.ElderProfileRepository;
 import br.com.caregiverapp.security.AuthenticatedUserService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CareRequestService {
@@ -60,5 +62,13 @@ public class CareRequestService {
         return careRequestRepository.findByCityAndStateAndStatus(
                 city, state, CareRequestStatus.OPEN
         );
+    }
+
+    public CareRequest getById(UUID id) {
+
+        return careRequestRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Care request not found")
+                );
     }
 }

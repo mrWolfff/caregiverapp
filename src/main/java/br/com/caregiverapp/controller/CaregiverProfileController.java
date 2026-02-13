@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/caregiver/profile")
+@RequestMapping("api/caregiver")
 public class CaregiverProfileController {
 
     private final CaregiverProfileService service;
@@ -18,13 +18,10 @@ public class CaregiverProfileController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<CaregiverProfileResponse> create(
-            @RequestBody CreateCaregiverProfileRequest request
-    ) {
+    @PostMapping("/profile")
+    public ResponseEntity<CaregiverProfileResponse> create( @RequestBody CreateCaregiverProfileRequest request) {
         CaregiverProfile profile = service.createProfile(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CaregiverProfileResponse.from(profile));
+        return ResponseEntity.status(HttpStatus.CREATED).body(CaregiverProfileResponse.from(profile));
     }
 }

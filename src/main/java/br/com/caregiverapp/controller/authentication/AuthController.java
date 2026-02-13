@@ -3,6 +3,8 @@ package br.com.caregiverapp.controller.authentication;
 import br.com.caregiverapp.domain.dto.AuthRequest;
 import br.com.caregiverapp.domain.dto.AuthResponse;
 import br.com.caregiverapp.domain.dto.RegisterRequest;
+import br.com.caregiverapp.domain.dto.UserResponse;
+import br.com.caregiverapp.domain.model.User;
 import br.com.caregiverapp.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +44,19 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> me() {
+        User user = authService.getCurrentUser();
+
+        return ResponseEntity.ok(
+                new UserResponse(
+                        user.getId(),
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getRole()
+                )
+        );
+    }
+
 }

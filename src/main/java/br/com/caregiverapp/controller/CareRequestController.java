@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/care-requests")
@@ -39,5 +40,16 @@ public class CareRequestController {
                 .stream()
                 .map(CareRequestResponse::from)
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CareRequestResponse> getById(
+            @PathVariable UUID id
+    ) {
+        CareRequest careRequest = service.getById(id);
+
+        return ResponseEntity.ok(
+                CareRequestResponse.from(careRequest)
+        );
     }
 }

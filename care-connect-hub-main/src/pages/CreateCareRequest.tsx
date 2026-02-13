@@ -13,7 +13,7 @@ import { z } from 'zod';
 
 const careRequestSchema = z.object({
   description: z.string().min(20, 'Por favor, forneça uma descrição detalhada (pelo menos 20 caracteres)'),
-  date: z.string().min(1, 'A data é obrigatória'),
+  careDate: z.string().min(1, 'A data é obrigatória'),
   startTime: z.string().min(1, 'A hora de início é obrigatória'),
   endTime: z.string().min(1, 'A hora de término é obrigatória'),
   city: z.string().min(1, 'A cidade é obrigatória'),
@@ -27,7 +27,7 @@ export default function CreateCareRequest() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     description: '',
-    date: '',
+    careDate: '',
     startTime: '',
     endTime: '',
     city: '',
@@ -72,7 +72,7 @@ export default function CreateCareRequest() {
           description: error.message,
           variant: 'destructive',
         });
-        navigate('/elder/profile');
+        if(error.message.includes('Elder profile not found')) navigate('/elder/profile');
       }
       toast({
         title: 'Erro',
@@ -142,13 +142,13 @@ export default function CreateCareRequest() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="date">Data</Label>
+                  <Label htmlFor="careDate">Data</Label>
                   <Input
                     id="date"
                     type="date"
                     min={minDate}
-                    value={formData.date}
-                    onChange={(e) => updateField('date', e.target.value)}
+                    value={formData.careDate}
+                    onChange={(e) => updateField('careDate', e.target.value)}
                     className={errors.date ? 'border-destructive' : ''}
                   />
                   {errors.date && (

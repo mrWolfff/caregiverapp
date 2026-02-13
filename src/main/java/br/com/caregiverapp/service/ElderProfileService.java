@@ -1,26 +1,33 @@
 package br.com.caregiverapp.service;
 
+import br.com.caregiverapp.domain.dto.CareRequestResponse;
 import br.com.caregiverapp.domain.dto.CreateElderProfileRequest;
 import br.com.caregiverapp.domain.dto.UpdateElderProfileRequest;
+import br.com.caregiverapp.domain.model.CareRequest;
 import br.com.caregiverapp.domain.model.ElderProfile;
 import br.com.caregiverapp.domain.model.User;
 import br.com.caregiverapp.exception.ProfileNotFoundException;
+import br.com.caregiverapp.repository.CareRequestRepository;
 import br.com.caregiverapp.repository.ElderProfileRepository;
 import br.com.caregiverapp.security.AuthenticatedUserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ElderProfileService {
 
     private final ElderProfileRepository repository;
     private final AuthenticatedUserService authenticatedUserService;
+    private final CareRequestRepository careRequestRepository;
 
     public ElderProfileService(
             ElderProfileRepository repository,
-            AuthenticatedUserService authenticatedUserService
+            AuthenticatedUserService authenticatedUserService, CareRequestRepository careRequestRepository
     ) {
         this.repository = repository;
         this.authenticatedUserService = authenticatedUserService;
+        this.careRequestRepository = careRequestRepository;
     }
 
     public ElderProfile getProfile() {
@@ -84,4 +91,32 @@ public class ElderProfileService {
 
         return repository.save(profile);
     }
+
+    public List<CareRequestResponse> getMyRequests() {
+        User user = authenticatedUserService.getCurrentUser();
+
+        ElderProfile profile = repository
+                .findByUserId(user.getId())
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
+
+
+
+        return careRequestRepository.findByElderProfileId(profile.getId())
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    private CareRequestResponse toResponse(CareRequest entity) {
+        return new CareRequestResponse(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getDescription(),
+                entity.getStatus(),
+                entity.getCreatedAt()
+                //ajustar aqui
+        );
+    }
+
+
 }

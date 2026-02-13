@@ -5,6 +5,7 @@ import br.com.caregiverapp.domain.dto.UserResponse;
 import br.com.caregiverapp.domain.model.User;
 import br.com.caregiverapp.domain.model.UserRole;
 import br.com.caregiverapp.repository.UserRepository;
+import br.com.caregiverapp.security.AuthenticatedUserService;
 import br.com.caregiverapp.security.JwtService;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -18,17 +19,19 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticatedUserService authenticatedUserService;
 
     public AuthService(
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager, AuthenticatedUserService authenticatedUserService
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.authenticatedUserService = authenticatedUserService;
     }
 
     public AuthResponse login(String email, String password) {
@@ -87,5 +90,9 @@ public class AuthService {
                         user.getRole()
                 )
         );
+    }
+
+    public User getCurrentUser() {
+        return authenticatedUserService.getCurrentUser();
     }
 }
