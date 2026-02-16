@@ -108,14 +108,7 @@ public class ElderProfileService {
     }
 
     private CareRequestResponse toResponse(CareRequest entity) {
-        return new CareRequestResponse(
-                entity.getId(),
-                entity.getTitle(),
-                entity.getDescription(),
-                entity.getStatus(),
-                entity.getCreatedAt()
-                //ajustar aqui
-        );
+        return CareRequestResponse.from(entity);
     }
 
 

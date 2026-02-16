@@ -10,6 +10,8 @@ public record CaregiverProfileResponse(
         String bio,
         Integer yearsOfExperience,
         String hourlyRate,
+        String availableFrom,
+        String availableTo,
         String city,
         String state,
         String skills
@@ -21,6 +23,8 @@ public record CaregiverProfileResponse(
                 profile.getBio(),
                 profile.getYearsOfExperience(),
                 profile.getHourlyRate() != null ? profile.getHourlyRate().toString() : null,
+                profile.getAvailableFrom() != null ? profile.getAvailableFrom().toString() : null,
+                profile.getAvailableTo() != null ? profile.getAvailableTo().toString() : null,
                 profile.getCity(),
                 profile.getState(),
                 profile.getSkills()

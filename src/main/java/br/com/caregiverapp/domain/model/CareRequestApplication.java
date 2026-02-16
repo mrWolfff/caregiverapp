@@ -29,6 +29,9 @@ public class CareRequestApplication {
     @JoinColumn(name = "caregiver_profile_id", nullable = false)
     private CaregiverProfile caregiverProfile;
 
+    @Column(columnDefinition = "text")
+    private String message;
+
     @CreationTimestamp
     private OffsetDateTime createdAt;
 
@@ -36,15 +39,18 @@ public class CareRequestApplication {
 
     public CareRequestApplication(
             CareRequest careRequest,
-            CaregiverProfile caregiverProfile
+            CaregiverProfile caregiverProfile,
+            String message
     ) {
         this.careRequest = careRequest;
         this.caregiverProfile = caregiverProfile;
+        this.message = message;
     }
 
     // getters
     public UUID getId() { return id; }
     public CareRequest getCareRequest() { return careRequest; }
     public CaregiverProfile getCaregiverProfile() { return caregiverProfile; }
+    public String getMessage() { return message; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
 }

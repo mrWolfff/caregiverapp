@@ -33,8 +33,8 @@ public class CareRequestController {
 
     @GetMapping
     public List<CareRequestResponse> listOpen(
-            @RequestParam String city,
-            @RequestParam String state
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String state
     ) {
         return service.listOpenByLocation(city, state)
                 .stream()

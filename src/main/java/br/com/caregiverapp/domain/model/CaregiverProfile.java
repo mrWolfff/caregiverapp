@@ -107,6 +107,26 @@ public class CaregiverProfile {
         return availableTo;
     }
 
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setYearsOfExperience(Integer yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public void setHourlyRate(BigDecimal hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public void setAvailableFrom(LocalTime availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public void setAvailableTo(LocalTime availableTo) {
+        this.availableTo = availableTo;
+    }
+
     public String getCity() {
         return city;
     }
@@ -125,6 +145,10 @@ public class CaregiverProfile {
 
     public String getSkills() {
         return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
     }
 
     public OffsetDateTime getCreatedAt() {

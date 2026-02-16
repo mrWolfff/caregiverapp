@@ -32,7 +32,7 @@ public class CareRequestApplicationService {
 
 
     @Transactional
-    public CareRequestApplication apply(UUID careRequestId) {
+    public CareRequestApplication apply(UUID careRequestId, String message) {
 
         User user = authenticatedUserService.getCurrentUser();
 
@@ -54,7 +54,7 @@ public class CareRequestApplicationService {
         }
 
         return applicationRepository.save(
-                new CareRequestApplication(careRequest, caregiverProfile)
+                new CareRequestApplication(careRequest, caregiverProfile, message)
         );
     }
 

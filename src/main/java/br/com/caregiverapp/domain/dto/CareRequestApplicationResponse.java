@@ -8,6 +8,7 @@ public record CareRequestApplicationResponse(
         UUID id,
         UUID careRequestId,
         UUID caregiverProfileId,
+        String message,
         String appliedAt
 ) {
     public static CareRequestApplicationResponse from(
@@ -17,6 +18,7 @@ public record CareRequestApplicationResponse(
                 application.getId(),
                 application.getCareRequest().getId(),
                 application.getCaregiverProfile().getId(),
+                application.getMessage(),
                 application.getCreatedAt().toString()
         );
     }

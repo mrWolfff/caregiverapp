@@ -32,7 +32,7 @@ public class CareRequestAssignmentService {
     }
 
     @Transactional
-    public void acceptCaregiver(UUID careRequestId, UUID caregiverProfileId) {
+    public void acceptApplication(UUID careRequestId, UUID applicationId) {
 
         User user = authenticatedUserService.getCurrentUser();
 
@@ -50,20 +50,14 @@ public class CareRequestAssignmentService {
             throw new IllegalStateException("Care request is not open");
         }
 
-        boolean applied = applicationRepository
-                .existsByCareRequestIdAndCaregiverProfileId(
-                        careRequestId, caregiverProfileId
-                );
+        CareRequestApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
 
-        if (!applied) {
-            throw new IllegalStateException("Caregiver did not apply");
+        if (!application.getCareRequest().getId().equals(careRequestId)) {
+            throw new IllegalStateException("Application does not belong to this care request");
         }
 
-        CaregiverProfile caregiverProfile =
-                caregiverProfileRepository.findById(caregiverProfileId)
-                        .orElseThrow(() -> new IllegalArgumentException("Caregiver not found"));
-
-        careRequest.assignCaregiver(caregiverProfile);
+        careRequest.assignCaregiver(application.getCaregiverProfile());
 
         careRequestRepository.save(careRequest);
     }

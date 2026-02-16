@@ -59,9 +59,17 @@ public class CareRequestService {
 
     @Transactional(readOnly = true)
     public List<CareRequest> listOpenByLocation(String city, String state) {
-        return careRequestRepository.findByCityAndStateAndStatus(
-                city, state, CareRequestStatus.OPEN
-        );
+        if (city != null && state != null) {
+            return careRequestRepository.findByCityAndStateAndStatus(
+                    city, state, CareRequestStatus.OPEN
+            );
+        } else if (city != null) {
+            return careRequestRepository.findByCityAndStatus(city, CareRequestStatus.OPEN);
+        } else if (state != null) {
+            return careRequestRepository.findByStateAndStatus(state, CareRequestStatus.OPEN);
+        } else {
+            return careRequestRepository.findByStatus(CareRequestStatus.OPEN);
+        }
     }
 
     public CareRequest getById(UUID id) {

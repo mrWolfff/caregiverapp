@@ -72,13 +72,14 @@ export default function CreateCareRequest() {
           description: error.message,
           variant: 'destructive',
         });
-        if(error.message.includes('Elder profile not found')) navigate('/elder/profile');
-      }
+        if(error.message.includes('You must create an elder profile first')) navigate('/elder/profile');
+      } else {
       toast({
         title: 'Erro',
         description: 'Falha ao criar o pedido de cuidado. Por favor, tente novamente.',
         variant: 'destructive',
       });
+      }
     } finally {
       setIsSubmitting(false);
     }

@@ -18,5 +18,11 @@ public interface CareRequestRepository
             CareRequestStatus status
     );
 
+    List<CareRequest> findByCityAndStatus(String city, CareRequestStatus status);
+
+    List<CareRequest> findByStateAndStatus(String state, CareRequestStatus status);
+
+    List<CareRequest> findByStatus(CareRequestStatus status);
+
     List<CareRequest> findByElderProfileId(UUID elderProfileId);
 }

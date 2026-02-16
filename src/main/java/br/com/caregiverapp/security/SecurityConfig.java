@@ -39,6 +39,8 @@ public class SecurityConfig {
                         // Care Requests
                         .requestMatchers(HttpMethod.POST, "api/care-requests").hasRole("ELDER")
                         .requestMatchers(HttpMethod.POST, "api/care-requests/*/apply").hasRole("CAREGIVER")
+                        .requestMatchers(HttpMethod.GET, "api/care-requests/*/applications").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "api/care-requests/*/applications/*/accept").hasRole("ELDER")
                         .requestMatchers(HttpMethod.GET, "api/care-requests/*/applicants").hasRole("ELDER")
 
                         .anyRequest().authenticated()
