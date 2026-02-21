@@ -3,6 +3,7 @@ package br.com.caregiverapp.domain.dto;
 import br.com.caregiverapp.domain.model.CareRequestApplication;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public record CaregiverApplicantResponse(
@@ -13,7 +14,7 @@ public record CaregiverApplicantResponse(
         BigDecimal hourlyRate,
         String city,
         String state,
-        String skills,
+        List<String> skills,
         String appliedAt
 ) {
     public static CaregiverApplicantResponse from(
@@ -30,7 +31,7 @@ public record CaregiverApplicantResponse(
                 caregiver.getHourlyRate(),
                 caregiver.getCity(),
                 caregiver.getState(),
-                caregiver.getSkills(),
+                caregiver.getSkillsAsList(),
                 application.getCreatedAt().toString()
         );
     }

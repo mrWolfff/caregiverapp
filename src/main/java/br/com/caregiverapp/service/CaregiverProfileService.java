@@ -46,7 +46,7 @@ public class CaregiverProfileService {
         profile.setAvailableTo(req.availableTo());
         profile.setCity(req.city());
         profile.setState(req.state());
-        profile.setSkills(req.skills());
+        profile.setSkillsFromList(req.skills());
 
         return profileRepository.save(profile);
     }

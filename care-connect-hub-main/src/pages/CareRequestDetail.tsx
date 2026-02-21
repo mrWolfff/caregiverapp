@@ -90,11 +90,20 @@ export default function CareRequestDetail() {
       setDialogOpen(false);
       setApplicationMessage('');
     } catch (error) {
-      toast({
-        title: 'Erro',
-        description: 'Falha ao se candidatar. Você já pode ter se candidatado.',
-        variant: 'destructive',
-      });
+      if (error.status === 403) {
+        toast({
+          title: 'Erro',
+          description: error.message,
+          variant: 'destructive',
+        });
+        if(error.message.includes('Caregiver profile not found')) navigate('/caregiver/profile');
+      } else {
+        toast({
+          title: 'Erro',
+          description: 'Falha ao se candidatar. Você já pode ter se candidatado.',
+          variant: 'destructive',
+        });
+      }
     } finally {
       setIsApplying(false);
     }
@@ -306,7 +315,7 @@ export default function CareRequestDetail() {
                 </Card>
               ) : (
                 applications.map((app) => (
-                  <Card key={app.id} className={app.status === 'ACCEPTED' ? 'border-success' : ''}>
+                  <Card key={app.id} className={app.status === 'ACCEPTED' ? 'border-primary' : ''}>
                     <CardHeader>
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -314,7 +323,7 @@ export default function CareRequestDetail() {
                             <User className="h-5 w-5 text-primary" />
                             {app.caregiverName}
                             {app.status === 'ACCEPTED' && (
-                              <Badge variant="default" className="bg-success">
+                              <Badge variant="default" className="bg-green-600 hover:bg-green-700">
                                 <CheckCircle className="h-3 w-3 mr-1" />
                                 Aceito
                               </Badge>
@@ -350,11 +359,11 @@ export default function CareRequestDetail() {
                           <p className="text-sm italic">"{app.message}"</p>
                         </div>
                       )}
-                      {request.status === 'OPEN' && app.status === 'PENDING' && (
+                      {request.status === 'OPEN' && app.status !== 'ACCEPTED' && (
                         <Button
                           onClick={() => handleAccept(app.id)}
                           disabled={!!acceptingId}
-                          variant="success"
+                          className="bg-green-600 hover:bg-green-700 text-white"
                         >
                           {acceptingId === app.id ? (
                             <>

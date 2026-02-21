@@ -2,6 +2,7 @@ package br.com.caregiverapp.domain.dto;
 
 import br.com.caregiverapp.domain.model.CaregiverProfile;
 
+import java.util.List;
 import java.util.UUID;
 
 public record CaregiverProfileResponse(
@@ -14,7 +15,7 @@ public record CaregiverProfileResponse(
         String availableTo,
         String city,
         String state,
-        String skills
+        List<String> skills
 ) {
     public static CaregiverProfileResponse from(CaregiverProfile profile) {
         return new CaregiverProfileResponse(
@@ -27,7 +28,7 @@ public record CaregiverProfileResponse(
                 profile.getAvailableTo() != null ? profile.getAvailableTo().toString() : null,
                 profile.getCity(),
                 profile.getState(),
-                profile.getSkills()
+                profile.getSkillsAsList()
         );
     }
 }

@@ -3,6 +3,7 @@ package br.com.caregiverapp.security;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,22 +27,22 @@ public class SecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> {})
+                .cors(Customizer.withDefaults())
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
 
                         // Profiles
-                        .requestMatchers("api/caregiver/**").hasRole("CAREGIVER")
-                        .requestMatchers("api/elder/**").hasRole("ELDER")
+                        .requestMatchers("/api/caregiver/**").permitAll()
+                        .requestMatchers("/api/elder/**").hasRole("ELDER")
 
                         // Care Requests
-                        .requestMatchers(HttpMethod.POST, "api/care-requests").hasRole("ELDER")
-                        .requestMatchers(HttpMethod.POST, "api/care-requests/*/apply").hasRole("CAREGIVER")
-                        .requestMatchers(HttpMethod.GET, "api/care-requests/*/applications").hasRole("ELDER")
-                        .requestMatchers(HttpMethod.POST, "api/care-requests/*/applications/*/accept").hasRole("ELDER")
-                        .requestMatchers(HttpMethod.GET, "api/care-requests/*/applicants").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "/api/care-requests").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "/api/care-requests/*/apply").hasRole("CAREGIVER")
+                        .requestMatchers(HttpMethod.GET, "/api/care-requests/*/applications").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.POST, "/api/care-requests/*/applications/*/accept").hasRole("ELDER")
+                        .requestMatchers(HttpMethod.GET, "/api/care-requests/*/applicants").hasRole("ELDER")
 
                         .anyRequest().authenticated()
                 )

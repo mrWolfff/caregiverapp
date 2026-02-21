@@ -7,6 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -62,7 +65,7 @@ public class CaregiverProfile {
             LocalTime availableTo,
             String city,
             String state,
-            String skills
+            List<String> skills
     ) {
         this.user = user;
         this.bio = bio;
@@ -72,7 +75,7 @@ public class CaregiverProfile {
         this.availableTo = availableTo;
         this.city = city;
         this.state = state;
-        this.skills = skills;
+        setSkillsFromList(skills);
     }
 
     public UUID getId() {
@@ -147,8 +150,23 @@ public class CaregiverProfile {
         return skills;
     }
 
+    public List<String> getSkillsAsList() {
+        if (skills == null || skills.isBlank()) {
+            return Collections.emptyList();
+        }
+        return Arrays.asList(skills.split(","));
+    }
+
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public void setSkillsFromList(List<String> skillsList) {
+        if (skillsList == null || skillsList.isEmpty()) {
+            this.skills = null;
+        } else {
+            this.skills = String.join(",", skillsList);
+        }
     }
 
     public OffsetDateTime getCreatedAt() {

@@ -61,7 +61,7 @@ export interface CareRequest {
 export interface CareApplication {
   id: string;
   careRequestId: string;
-  caregiverId: string;
+  caregiverProfileId: string;
   caregiverName: string;
   caregiverBio?: string;
   yearsOfExperience?: number;

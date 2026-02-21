@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = header.substring(7);
-
+        System.out.println("HEADER: " + header);
         if (jwtService.isValid(token)) {
             String email = jwtService.extractEmail(token);
             UserDetails userDetails =

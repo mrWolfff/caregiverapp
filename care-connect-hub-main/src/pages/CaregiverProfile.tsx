@@ -66,6 +66,8 @@ export default function CaregiverProfile() {
       if (profile.id) {
         await apiService.updateCaregiverProfile(profile);
       } else {
+        console.log("PAYLOAD:", profile);
+        console.log("JSON:", JSON.stringify(profile, null, 2));
         await apiService.createCaregiverProfile(profile);
       }
       toast({

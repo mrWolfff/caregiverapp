@@ -1,6 +1,7 @@
 package br.com.caregiverapp.service;
 
 import br.com.caregiverapp.domain.model.*;
+import br.com.caregiverapp.exception.ProfileNotFoundException;
 import br.com.caregiverapp.repository.CareRequestApplicationRepository;
 import br.com.caregiverapp.repository.CareRequestRepository;
 import br.com.caregiverapp.repository.CaregiverProfileRepository;
@@ -38,7 +39,7 @@ public class CareRequestApplicationService {
 
         CaregiverProfile caregiverProfile =
                 caregiverProfileRepository.findByUserId(user.getId())
-                        .orElseThrow(() -> new IllegalStateException("Caregiver profile not found"));
+                        .orElseThrow(() -> new ProfileNotFoundException("Caregiver profile not found"));
 
         CareRequest careRequest = careRequestRepository.findById(careRequestId)
                 .orElseThrow(() -> new IllegalArgumentException("Care request not found"));

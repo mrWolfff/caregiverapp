@@ -117,4 +117,8 @@ public class CareRequest {
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public CaregiverProfile getAssignedCaregiver() {
+        return assignedCaregiver;
+    }
 }
