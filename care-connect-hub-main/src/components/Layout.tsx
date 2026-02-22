@@ -37,6 +37,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       : [
           { href: '/dashboard', label: 'Painel' },
           { href: '/care-requests', label: 'Buscar Vagas' },
+          { href: '/education', label: 'Educação' },
         ]
     : [];
 

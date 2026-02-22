@@ -16,6 +16,7 @@ import CreateCareRequest from "./pages/CreateCareRequest";
 import CareRequests from "./pages/CareRequests";
 import CareRequestDetail from "./pages/CareRequestDetail";
 import MyRequests from "./pages/MyRequests";
+import Education from "./pages/Education";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -86,6 +87,14 @@ const App = () => (
               element={
                 <ProtectedRoute allowedRoles={['ELDER']}>
                   <MyRequests />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/education"
+              element={
+                <ProtectedRoute allowedRoles={['CAREGIVER']}>
+                  <Education />
                 </ProtectedRoute>
               }
             />
